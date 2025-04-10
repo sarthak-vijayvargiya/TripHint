@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Find your next travel destination with Trip Hint">
+    <meta name="keywords" content="travel, destinations, tours, vacation, trip">
+    <meta name="author" content="Trip Hint">
+    <title>Trip Hint - Travel Explorer</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <a href="Untitled-1.html" class="brand-name">Trip Hint</a>
+        <button class="mobile-menu-toggle" aria-label="Toggle menu">
+            <i class="fas fa-bars"></i>
+        </button>
+        <ul class="navigation">
+            <button class="mobile-menu-close" aria-label="Close menu">
+                <i class="fas fa-times"></i>
+            </button>
+            <li><a href="#"><i class="fas fa-home"></i> <span class="nav-text">Home</span></a></li>
+            <li><a href="#"><i class="fas fa-map-marked-alt"></i> <span class="nav-text">Destinations</span></a></li>
+            <li><a href="packages.html"><i class="fas fa-umbrella-beach"></i> <span class="nav-text">Tours</span></a></li>
+            <li><a href="#"><i class="fas fa-phone-alt"></i> <span class="nav-text">Contact</span></a></li>
+            <li class="auth-buttons">
+                <a href="login.html" class="login-btn" id="loginBtn"><i class="fas fa-sign-in-alt"></i> <span class="nav-text">Login/Register</span></a>
+                <div class="profile-menu" id="profileMenu" style="display: none;">
+                    <a href="#" class="profile-btn"><i class="fas fa-user-circle"></i> <span class="nav-text">Profile</span></a>
+                    <div class="profile-dropdown">
+                        <a href="#"><i class="fas fa-user"></i> My Account</a>
+                        <a href="#"><i class="fas fa-cog"></i> Settings</a>
+                        <a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Theme Toggle Button -->
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+        <i class="fas fa-moon"></i>
+    </button>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <img src="hero.jpg" alt="Travel Destination" loading="lazy">
+        <div class="search-container">
+            <div class="searchbox">
+                <h1 class="searchheading">Discover Your Next Adventure</h1>
+                <div class="search-group">
+                    <input type="text" class="searchbar" placeholder="Where do you want to go?" aria-label="Search destination">
+                    <button class="searchbutton" aria-label="Search">Search</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Destinations Section -->
+    <section class="destinations-section" id="destinations">
+        <h2 class="section-title">Popular Destinations</h2>
+        <div class="destinations-container">
+            <!-- Destination Card 1 -->
+            <div class="destination-card">
+                <img src="jaipur.jpg" alt="Jaipur" loading="lazy">
+                <div class="destination-info">
+                    <h3>Jaipur, India</h3>
+                    <p>The Pink City</p>
+                    <p class="price">From $599</p>
+                </div>
+            </div>
+            
+            <!-- Destination Card 2 -->
+            <div class="destination-card">
+                <img style="object-fit: cover;" src="darjeeling.avif" alt="Darjeeling" loading="lazy">
+                <div class="destination-info">
+                    <h3>Darjeeling, India</h3>
+                    <p>Queen of Hills</p>
+                    <p class="price">From $799</p>
+                </div>
+            </div>
+            
+            <!-- Destination Card 3 -->
+            <div class="destination-card">
+                <img src="udaipur.jpg" alt="Udaipur" loading="lazy">
+                <div class="destination-info">
+                    <h3>Udaipur, India</h3>
+                    <p>City of Lakes</p>
+                    <p class="price">From $1099</p>
+                </div>
+            </div>
+            
+            <!-- Destination Card 4 -->
+            <div class="destination-card">
+                <img src="goa.avif" alt="Goa" loading="lazy">
+                <div class="destination-info">
+                    <h3>Goa, India</h3>
+                    <p>Beach Paradise</p>
+                    <p class="price">From $1299</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+        const mobileMenuClose = document.querySelector('.mobile-menu-close');
+        const navigation = document.querySelector('.navigation');
+
+        mobileMenuToggle.addEventListener('click', () => {
+            navigation.classList.add('active');
+        });
+
+        mobileMenuClose.addEventListener('click', () => {
+            navigation.classList.remove('active');
+            // Additional functionality for close button
+            const profileDropdown = document.querySelector('.profile-dropdown');
+            if (profileDropdown.classList.contains('show')) {
+                profileDropdown.classList.remove('show');
+            }
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (navigation.classList.contains('active') && 
+                !navigation.contains(e.target) && 
+                !mobileMenuToggle.contains(e.target)) {
+                navigation.classList.remove('active');
+            }
+        });
+
+        // Close menu when clicking on navigation links
+        const navLinks = document.querySelectorAll('.navigation a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                navigation.classList.remove('active');
+            });
+        });
+
+        // Theme Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const html = document.documentElement;
+
+        // Initialize theme
+        function initializeTheme() {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            setTheme(savedTheme);
+        }
+
+        function setTheme(theme) {
+            html.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+            updateThemeIcon(theme);
+        }
+
+        function updateThemeIcon(theme) {
+            const icon = themeToggle.querySelector('i');
+            if (theme === 'dark') {
+                icon.className = 'fas fa-sun';
+            } else {
+                icon.className = 'fas fa-moon';
+            }
+        }
+
+        function toggleTheme() {
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            setTheme(newTheme);
+        }
+
+        // Add event listeners
+        themeToggle.addEventListener('click', toggleTheme);
+        document.addEventListener('DOMContentLoaded', initializeTheme);
+
+        // Check login status on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+            const loginBtn = document.getElementById('loginBtn');
+            const profileMenu = document.getElementById('profileMenu');
+            
+            if (isLoggedIn === 'true') {
+                loginBtn.style.display = 'none';
+                profileMenu.style.display = 'block';
+            } else {
+                loginBtn.style.display = 'block';
+                profileMenu.style.display = 'none';
+            }
+        });
+
+        // Handle logout
+        document.getElementById('logoutBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            localStorage.removeItem('isLoggedIn');
+            window.location.reload();
+        });
+
+        // Toggle profile dropdown
+        document.querySelector('.profile-btn').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.querySelector('.profile-dropdown').classList.toggle('show');
+        });
+
+        // Close dropdown when clicking outside
+        window.addEventListener('click', function(e) {
+            if (!e.target.matches('.profile-btn') && !e.target.closest('.profile-dropdown')) {
+                const dropdown = document.querySelector('.profile-dropdown');
+                if (dropdown.classList.contains('show')) {
+                    dropdown.classList.remove('show');
+                }
+            }
+        });
+    </script>
+</body>
+</html>
